@@ -4,4 +4,6 @@ A second bug is that the wins/losses are not kept track of correctly. The other 
 was not originally used to increment the total value. Replacing this with "die.value" fixes the value calculation. Another bug comes from the fact that we set c = 0 when we lose,
 which is not correct since this is keeping track of the number of wins - if we have one win, losing should not reset the win counter. Technically, this is redundant since we have
 runner.wins and runner.loses keeping track of wins/loses. However, we don't need to remove the variable c. This is not a bug in and of it self. The final thing added is that specifying 
-a non-integer value or nothing at all for the guess crashes the program. This was fixed gracefully by adding a try-except block. 
+a non-integer value or nothing at all for the guess crashes the program. This was fixed gracefully by adding a try-except block. Edit: the fix initially didn't keep correct track of the number
+of wins. This has been fixed. Since we reset the value of the wins/loses in the while-loop each time when we have runner = cls() inside the while-loop. By moving it out of the while-loop, this is fixed.
+But now the dice is not rolled each round so we need to move some things. Each round the dice should be rolled again. This was implemented. 
