@@ -1,0 +1,14 @@
+a) We can see that some time is spent in the list comprehensions on lines 11 and 16 when checking with line_profiler, accounts for about 1.3%. However,
+by far the most time is spent in the for-loop on lines 28 and 29. So we should start optimizing line 29 first. After doing a memory_profile, we can also
+see that the most memory is used on line 29 as well. The for-loop and array multiplication/indexing take about 37.2% and 59.8% respectively.
+
+b) After running kernprof, we can see that the factorize() and fast_phi() functions take the most time. In particular, we can see that the while-loop in factorize() and
+the if-statement take time - the evaluation of p > sqrt(n) - sqrt evaluation is expensive. Since factorize() is called in fast_phi(), if we find a way to improve the speed of
+factorize(), fast_phi() should also take less time. Finally, the for loop in fast_phi() also takes a large chunk of time. We can see that the most memory is used by factors = factorize(n,primes)
+on line 51. The smaller the primes list, the less memory of course. This variable calls the factorize() function with n and primes. We also see that although the while-loop and if-statement in factorize() take quite some time, 
+the memory footprint is small. Appending to factors also takes some time. The larger the prime, the more expensive the evaluation inside the if-statement and while-loop becomes. 
+
+c) Similar to Matlab, we want to vectorize the code. One way to speed it up would be to remove for-loops. Before making the code faster, it took about 11.0056 s. One of the easiest ways to change the speed would be to change all
+the arrays in the current code to Numpy array and use built-in Numpy functions, and profile this modified code. We will put the modified code in matmult_numpied.py. Since numpy.random.int() creates a random array with exclusive boundaries
+and random.randint() creates a random array with inclusive boundaries we need to be sure to supply the correct range for the Numpy function. Running the modified Numpy function, we get a total time of 0.340827 s. this is one order-of-magnitude
+faster than the Python list implementation and uses much less code as well. 
